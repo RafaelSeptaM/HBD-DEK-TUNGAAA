@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Stevanieka</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;
+  min-height:100vh;
+  background:#ff4f8b;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+  padding:20px 0;
+}
+.card{
+  background:#fff;
+  width:92vw;
+  max-width:380px;
+  border-radius:20px;
+  padding:22px 18px 28px;
+  box-shadow:0 16px 32px rgba(0,0,0,.25);
+  text-align:center;
+}
+h1{
+  font-size:16px;
+  color:#ff2e6e;
+  margin-bottom:18px;
+}
+
+/* CAKE */
+.cake{
+  position:relative;
+  width:220px;
+  height:260px;
+  margin:0 auto 14px;
+}
+.layer{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%) translateY(30px);
+  width:78%;
+  height:44px;
+  border-radius:16px;
+  opacity:0;
+}
+.layer.bottom{bottom:16px;background:#ff5f9a}
+.layer.middle{bottom:68px;background:#ff87b4}
+.layer.top{bottom:120px;background:#ffc1d8}
+
+.candle{
+  position:absolute;
+  left:50%;
+  bottom:168px;
+  transform:translateX(-50%) scaleY(0);
+  width:12px;
+  height:36px;
+  background:repeating-linear-gradient(
+    45deg,#ff4f8b,#ff4f8b 4px,#fff 4px,#fff 8px
+  );
+  border-radius:6px;
+}
+.flame{
+  position:absolute;
+  top:-18px;
+  left:-3px;
+  width:18px;
+  height:18px;
+  background:radial-gradient(circle,#ffe8a3,#ff9f1c);
+  border-radius:50%;
+  opacity:0;
+}
+
+/* ANIM */
+.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  transition:.6s ease;
+}
+.candle.show{
+  transform:translateX(-50%) scaleY(1);
+  transition:.4s ease;
+}
+.flame.show{
+  opacity:1;
+  animation:flicker .6s infinite alternate;
+}
+@keyframes flicker{
+  from{transform:scale(.9)}
+  to{transform:scale(1.1)}
+}
+
+/* BUTTON */
+button{
+  margin-top:10px;
+  padding:10px 18px;
+  border:none;
+  border-radius:20px;
+  background:#ff4f8b;
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+}
+
+/* TEXT */
+#output{
+  margin-top:18px;
+  text-align:left;
+  font-size:13px;
+  line-height:1.7;
+  color:#333;
+}
+.paragraph{margin-bottom:14px}
+</style>
+</head>
+
+<body>
+<div class="card">
+  <h1>HAPPY BIRTHDAY<br>STEVANIEKA WENING TUNGGADEWI</h1>
+
+  <div class="cake">
+    <div class="layer bottom"></div>
+    <div class="layer middle"></div>
+    <div class="layer top"></div>
+    <div class="candle">
+      <div class="flame"></div>
+    </div>
+  </div>
+
+  <button id="openBtn">BUKA SURAT 💌</button>
+  <div id="output"></div>
+</div>
+
+<script>
+/* CAKE ANIMATION – AMAN IPHONE */
+document.addEventListener("DOMContentLoaded",()=>{
+  const bottom=document.querySelector(".layer.bottom");
+  const middle=document.querySelector(".layer.middle");
+  const top=document.querySelector(".layer.top");
+  const candle=document.querySelector(".candle");
+  const flame=document.querySelector(".flame");
+
+  setTimeout(()=>bottom.classList.add("show"),300);
+  setTimeout(()=>middle.classList.add("show"),900);
+  setTimeout(()=>top.classList.add("show"),1500);
+  setTimeout(()=>candle.classList.add("show"),2200);
+  setTimeout(()=>flame.classList.add("show"),2600);
+});
+
+/* LETTER */
+const btn=document.getElementById("openBtn");
+const output=document.getElementById("output");
+
+const paragraphs=[
+"SELAMAT ULANG TAHUN YA, SAYANG 🤍",
+"DI HARI SPESIAL KAMU INI, AKU MAU KAMU TAU SATU HAL: TUHAN MENGASIHI KAMU DENGAN KASIH YANG KEKAL, SEPERTI YANG TERTULIS DI YEREMIA 31:3. DI SETIAP MUSIM HIDUP KAMU, TUHAN SELALU ADA DAN SETIA.",
+"TUHAN NGGAK PERNAH MENINGGALKAN KAMU, BAHKAN SAAT KAMU NGERASA LELAH, KECEWA, ATAU NGGAK DIDENGAR. DIA DENGER SETIAP DOA DAN TAU SETIAP AIR MATA KAMU.",
+"AKU BERSYUKUR SAMA TUHAN KARENA BOLEH PUNYA KAMU. KAMU ADALAH BERKAT TERINDAH YANG TUHAN TITIPKAN DALAM HIDUP AKU.",
+"DI USIA BARU INI, INGATLAH AKAN PENCIPTAMU PADA MASA MUDAMU (PENGKHOTBAH 12:1). TERUSLAH BERTUMBUH DAN BERJALAN BERSAMA TUHAN.",
+"SELAMAT ULANG TAHUN YA, SAYANG 🤍 TUHAN YESUS MEMBERKATI SETIAP LANGKAH HIDUPMU."
+];
+
+btn.addEventListener("click",()=>{
+  btn.style.display="none";
+  let p=0;
+
+  function next(){
+    if(p>=paragraphs.length) return;
+    const div=document.createElement("div");
+    div.className="paragraph";
+    output.appendChild(div);
+
+    const words=paragraphs[p].split(" ");
+    let w=0;
+
+    function type(){
+      if(w<words.length){
+        div.innerHTML+=(w?" ":"")+words[w++];
+        try{ div.scrollIntoView({behavior:"smooth"}); }
+        catch(e){ div.scrollIntoView(); }
+        setTimeout(type,90);
+      }else{
+        p++; setTimeout(next,600);
+      }
+    }
+    type();
+  }
+  next();
+});
+</script>
+</body>
+</html>
